@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Circle Risk Challenge</title>
+<style>body{font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:#f4f5f0;color:#14213d;margin:0;padding:32px 22px;text-align:center}h1{font-size:24px;margin:0 0 10px}p{font-size:17px;line-height:1.5;margin:8px 0}.code{font-size:26px;font-weight:700;letter-spacing:3px}a{color:#233a6b;font-weight:700}</style></head>
+<body><h1>Circle Risk Challenge</h1><p id="msg">Connecting you to the game…</p>
+<script>
+(function(){
+  var g=(new URLSearchParams(location.search).get("g")||"").replace(/[^A-Za-z0-9]/g,"").slice(0,12);
+  var msg=document.getElementById("msg");
+  function fail(t){msg.innerHTML=t+(g?'<br><br>Your group code is<br><span class="code">'+g+'</span>':'');}
+  fetch("target.txt?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.text();}).then(function(t){
+    var target=t.split(/\r?\n/).map(function(x){return x.trim();}).filter(function(x){return x&&x.charAt(0)!=="#";})[0]||"";
+    if(!/^https?:\/\/[A-Za-z0-9.-]+(:\d+)?\/?$/.test(target)){fail("The game has not started yet. Please wait for the facilitator, then scan again.");return;}
+    target=target.replace(/\/+$/,"");
+    if(!g){location.replace(target+"/");return;}
+    location.replace(target+"/j/"+g);
+  }).catch(function(){fail("Could not reach the game. Please scan again in a moment, or open the address on the projector and type your group code.");});
+})();
+</script></body></html>
