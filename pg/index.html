@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thar Region · BGTL</title>
+<style>body{font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:#eef1f5;color:#18202a;margin:0;padding:32px 22px;text-align:center}h1{font-size:24px;margin:0 0 10px}p{font-size:17px;line-height:1.5;margin:8px 0}</style></head>
+<body><h1>Thar Region · BGTL</h1><p id="msg">Connecting you to the game…</p>
+<script>
+// POWERGRID MDP (26-27 Nov 2026): the printed team cards open this page as .../crc/pg/?team=N. It reads the live game
+// address from target.txt (updated by the facilitator after each start of the game) and forwards to it with ?team=N.
+(function(){
+  var team=parseInt(new URLSearchParams(location.search).get("team")||"",10);
+  var msg=document.getElementById("msg");
+  function fail(t){msg.textContent=t;}
+  fetch("target.txt?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.text();}).then(function(t){
+    var target=t.split(/\r?\n/).map(function(x){return x.trim();}).filter(function(x){return x&&x.charAt(0)!=="#";})[0]||"";
+    if(!/^https?:\/\/[A-Za-z0-9.-]+(:\d+)?\/?$/.test(target)){fail("The game has not started yet. Please wait for the facilitator, then scan again.");return;}
+    target=target.replace(/\/+$/,"");
+    location.replace(target+"/"+(team>=1&&team<=12?"?team="+team:""));
+  }).catch(function(){fail("Could not reach the game. Please scan again in a moment, or scan the code on the projector screen.");});
+})();
+</script></body></html>
