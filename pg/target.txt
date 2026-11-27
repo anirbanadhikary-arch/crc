@@ -1,3 +1,2 @@
 # POWERGRID MDP: the live game address is on the first line that is not a comment. The start window writes it.
-https://comparison-sie-informational-your.trycloudflare.com
-# written again 2026-11-25 21:51 IST: the first page deploy failed at GitHub
+https://breath-still-illustrations-polyester.trycloudflare.com
